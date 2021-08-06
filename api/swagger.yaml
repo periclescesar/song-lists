@@ -1,4 +1,4 @@
-swagger: "3.0"
+swagger: "2.0"
 info:
   title: Song Lists
   description: Uma Api para gerenciar listas de musicas

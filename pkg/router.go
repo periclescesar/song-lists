@@ -2,8 +2,6 @@ package pkg
 
 import "github.com/gin-gonic/gin"
 
-
-
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
@@ -13,35 +11,14 @@ func SetupRouter() *gin.Engine {
 		})
 	})
 
-	r.GET("/lists", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
-	r.GET("/lists/:id", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
-	r.POST("/lists", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
-	r.PUT("/lists/:id", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
-	r.DELETE("/lists/:id", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	lists := r.Group("lists")
+	{
+		lists.GET("", getLists())
+		lists.POST("", createList())
+		lists.GET("/:id", getSingleList())
+		lists.PUT("/:id", updateList())
+		lists.DELETE("/:id", deleteList())
+	}
 
 	return r
 }

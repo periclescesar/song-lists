@@ -1,62 +1,51 @@
 Feature: create list
   Eu como usuário desejo criar uma lista de musicas
 
-  Scenario: should get hello world
-    When I send "GET" request to "/"
-    Then the response code should be 200
-    And the response should match json:
-      """
-      {
-        "message": "Hello World!"
-      }
-      """
-
-  Scenario: should get hello world
-    When I send "GET" request to "/lists"
-    Then the response code should be 200
-    And the response should match json:
-      """
-      {
-        "message": "pong"
-      }
-      """
-
   Scenario: should CREATE a list of songs
-    When I send "POST" request to "/lists"
+    When I send "POST" request to "/lists" with json:
+      """
+      {
+        "name": "lista 1",
+        "type": "custom",
+        "songs": [
+          1,
+          2,
+          3
+        ]
+      }
+      """
     Then the response code should be 200
     And the response should match json:
       """
-      {
-        "message": "pong"
-      }
+      {"name":"lista 1","type":"custom","songs":[1,2,3]}
       """
 
-  Scenario: should get hello world
-    When I send "GET" request to "/lists/1"
-    Then the response code should be 200
-    And the response should match json:
+  @wip
+  Scenario: should NOT CREATE a list of song without name
+    When I send "POST" request to "/lists" with json:
       """
       {
-        "message": "pong"
+        "name": "",
+        "type": "custom",
+        "songs": []
       }
+      """
+    Then the response code should be 400
+    And the response should match json:
+      """
+      {"error":"bad arguments"}
       """
 
-  Scenario: should UPDATE a list of songs
-    When I send "PUT" request to "/lists/1"
-    Then the response code should be 200
-    And the response should match json:
+  Scenario: should error parsing json
+    When I send "POST" request to "/lists" with json:
       """
       {
-        "message": "pong"
+        "name": "",
+        "type":
       }
       """
-
-  Scenario: should DELETE a list of songs
-    When I send "DELETE" request to "/lists/1"
-    Then the response code should be 200
+    Then the response code should be 400
     And the response should match json:
       """
-      {
-        "message": "pong"
-      }
+      {"error":"json parse error"}
       """

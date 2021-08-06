@@ -8,8 +8,10 @@ import (
 	"github.com/cucumber/godog"
 	"github.com/cucumber/messages-go/v10"
 	"github.com/stretchr/testify/assert"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -22,10 +24,10 @@ func (a *apiFeature) resetResponse(*messages.Pickle) {
 	a.resp = httptest.NewRecorder()
 }
 
-func (a *apiFeature) iSendRequestTo(method, endpoint string) (err error) {
+func (a *apiFeature) iSendRequestTo(method, endpoint string, body io.Reader) (err error) {
 	r := pkg.SetupRouter()
 
-	req, err := http.NewRequest(method, endpoint, nil)
+	req, err := http.NewRequest(method, endpoint, body)
 	if err != nil {
 		return
 	}
@@ -59,11 +61,16 @@ func (a *apiFeature) theResponseShouldMatchJSON(body *godog.DocString) error {
 		return err
 	}
 	actual = a.resp.Body.Bytes()
+
 	if !bytes.Equal(actual, expected) {
 		return fmt.Errorf("expected json, does not match actual: %s", string(actual))
 	}
 
 	return nil
+}
+
+func (a *apiFeature) theBodyShouldIsJson(method, endpoint string, body *godog.DocString) error {
+	return a.iSendRequestTo(method, endpoint, strings.NewReader(body.Content))
 }
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
@@ -72,4 +79,5 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I send "([^"]*)" request to "([^"]*)"$`, api.iSendRequestTo)
 	ctx.Step(`^the response code should be (\d+)$`, api.theResponseCodeShouldBe)
 	ctx.Step(`^the response should match json:$`, api.theResponseShouldMatchJSON)
+	ctx.Step(`^I send "([^"]*)" request to "([^"]*)" with json:$`, api.theBodyShouldIsJson)
 }

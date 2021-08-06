@@ -1,0 +1,9 @@
+{
+ "name": "exemple",
+ "songs": [
+  1,
+  2,
+  3
+ ],
+ "type": "custom"
+}
