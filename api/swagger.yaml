@@ -1,0 +1,103 @@
+swagger: "3.0"
+info:
+  title: Song Lists
+  description: Uma Api para gerenciar listas de musicas
+  version: 1.0.0
+host: localhost:8081
+schemes:
+  - http
+components:
+  List:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+      - id
+      - name
+paths:
+  /lists:
+    get:
+      summary: Returns pong
+      description: router test
+      responses:
+        '200':
+          description: A json response of ping
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 10
+                name: fav
+    post:
+      summary: Returns pong
+      description: router test
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+              example:
+                id: 10
+                name: fav
+      responses:
+        '200':
+          description: ok
+
+  /lists/{listId}:
+    get:
+      summary: Returns pong
+      parameters:
+        - in: path
+          name: listId
+          required: true
+          type: integer
+      description: router test
+      responses:
+        '200':
+          description: A json response of ping
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                example:
+                  id: 10
+                  name: fav
+    put:
+      summary: Returns pong
+      parameters:
+        - in: path
+          name: listId
+          required: true
+          type: integer
+      description: router test
+      responses:
+        '200':
+          description: A json response of ping
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                example:
+                  id: 10
+                  name: fav
+    delete:
+      summary: Returns pong
+      parameters:
+        - in: path
+          name: listId
+          required: true
+          type: integer
+      description: router test
+      responses:
+        '200':
+          description: A json response of ping
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                example:
+                  id: 10
+                  name: fav
