@@ -37,9 +37,6 @@ func updateList() func(c *gin.Context) {
 
 func createList() func(c *gin.Context) {
 	return func(c *gin.Context) {
-		ctn, _ := services.Container.SubContainer()
-		defer ctn.Delete()
-
 		var body domain.List
 
 		if err := c.ShouldBindJSON(&body); err != nil {
@@ -51,14 +48,9 @@ func createList() func(c *gin.Context) {
 
 		var repo repositories.ListRepository
 		if c.Query("draft") == "1" {
-			repo = ctn.Get("json-list-repository").(repositories.ListRepository) // if fail panic
+			repo = DefaultContainer.GetJsonListRepository()
 		} else {
-			if err := ctn.Fill("list-repository", &repo); err != nil {
-				c.JSON(domain.BADREQUEST, gin.H{
-					"error": "error on load default list-repository",
-				})
-				return
-			}
+			repo = DefaultContainer.GetSqliteListRepository()
 		}
 
 		listService := services.NewListService(repo)

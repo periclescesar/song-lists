@@ -1,0 +1,16 @@
+services:
+  JsonDriver:
+    type: '*GoSOLID/pkg/drivers.JsonDriver'
+    returns: drivers.NewJsonDriver("../data/list.json")
+
+  JsonListRepository:
+    type: '*GoSOLID/pkg/services/repositories.JsonListRepository'
+    returns: repositories.NewJsonListRepository(*@{JsonDriver})
+
+  SqliteListRepository:
+    type: '*GoSOLID/pkg/services/repositories.SqliteListRepository'
+    returns: repositories.NewSqliteListRepository()
+
+  ListRepository:
+    interface: 'GoSOLID/pkg/services/repositories.ListRepository'
+    returns: '@{SqliteListRepository}'
