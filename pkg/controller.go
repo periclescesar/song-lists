@@ -51,9 +51,14 @@ func createList() func(c *gin.Context) {
 
 		var repo repositories.ListRepository
 		if c.Query("draft") == "1" {
-			repo = ctn.Get("json-list-repository").(repositories.ListRepository)
+			repo = ctn.Get("json-list-repository").(repositories.ListRepository) // if fail panic
 		} else {
-			repo = ctn.Get("sqlite-list-repository").(repositories.ListRepository)
+			if err := ctn.Fill("list-repository", &repo); err != nil {
+				c.JSON(domain.BADREQUEST, gin.H{
+					"error": "error on load default list-repository",
+				})
+				return
+			}
 		}
 
 		listService := services.NewListService(repo)

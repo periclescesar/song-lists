@@ -39,6 +39,13 @@ func CreateServiceProvider() di.Container {
 				return repositories.NewSqliteListRepository(), nil
 			},
 		},
+		{
+			Name:  "list-repository",
+			Scope: di.App,
+			Build: func(ctn di.Container) (interface{}, error) {
+				return ctn.SafeGet("sqlite-list-repository")
+			},
+		},
 	}...)
 
 	return builder.Build()
