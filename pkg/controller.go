@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"GoSOLID/pkg/domain"
-	"GoSOLID/pkg/drivers"
 	"GoSOLID/pkg/services"
 	"GoSOLID/pkg/services/repositories"
 	"github.com/gin-gonic/gin"
@@ -49,8 +48,8 @@ func createList() func(c *gin.Context) {
 
 		var repo repositories.ListRepository
 		if c.GetHeader("Request-test") == "1" {
-			jd := drivers.NewJsonDriver("../data/list.json")
-			repo = repositories.NewJsonListRepository(*jd)
+			//jd := drivers.NewJsonDriver("../data/list.json")
+			//repo = repositories.NewJsonListRepository(*jd)
 		} else {
 			repo = repositories.NewSqliteListRepository()
 		}

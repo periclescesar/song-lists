@@ -43,6 +43,9 @@ github.com/gogo/protobuf/proto
 # github.com/golang/protobuf v1.5.2
 ## explicit
 github.com/golang/protobuf/proto
+# github.com/google/wire v0.5.0
+## explicit
+github.com/google/wire
 # github.com/hashicorp/go-immutable-radix v1.3.0
 github.com/hashicorp/go-immutable-radix
 # github.com/hashicorp/go-memdb v1.3.0
@@ -54,7 +57,6 @@ github.com/hashicorp/golang-lru/simplelru
 github.com/json-iterator/go
 # github.com/juliangruber/go-intersect v1.0.0
 ## explicit
-github.com/juliangruber/go-intersect
 # github.com/leodido/go-urn v1.2.1
 github.com/leodido/go-urn
 # github.com/mattn/go-isatty v0.0.13
