@@ -8,15 +8,17 @@ import (
 	"github.com/google/wire"
 )
 
-var sqlRepo = wire.NewSet(repositories.NewSqliteListRepository)
-var jsonRepo = wire.NewSet(wire.Value("../data/list.json"), drivers.NewJsonDriver, repositories.NewJsonListRepository)
-
-func ProviderListRepository(draft bool) repositories.ListRepository {
-	wire.Build(jsonRepo, wire.InterfaceValue(new(repositories.ListRepository), new(*repositories.JsonListRepository)))
+func InitializeJsonListRepository() *repositories.JsonListRepository {
+	wire.Build(wire.Value("../data/list.json"), drivers.NewJsonDriver, repositories.NewJsonListRepository)
 	return nil
 }
 
-func InitializeListRepository(draft bool) repositories.ListRepository {
-	wire.Build(ProviderListRepository)
+func InitializeSqliteListRepository() *repositories.SqliteListRepository {
+	wire.Build(repositories.NewSqliteListRepository)
+	return nil
+}
+
+func InitializeListRepository() repositories.ListRepository {
+	wire.Build(repositories.NewSqliteListRepository, wire.Bind(new(repositories.ListRepository), new(*repositories.SqliteListRepository)))
 	return nil
 }

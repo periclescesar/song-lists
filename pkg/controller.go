@@ -47,11 +47,10 @@ func createList() func(c *gin.Context) {
 		}
 
 		var repo repositories.ListRepository
-		if c.GetHeader("Request-test") == "1" {
-			//jd := drivers.NewJsonDriver("../data/list.json")
-			//repo = repositories.NewJsonListRepository(*jd)
+		if c.Query("draft") == "1" {
+			repo = InitializeJsonListRepository()
 		} else {
-			repo = repositories.NewSqliteListRepository()
+			repo = InitializeListRepository()
 		}
 
 		listService := services.NewListService(repo)
