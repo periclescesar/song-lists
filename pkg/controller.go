@@ -1,10 +1,12 @@
 package pkg
 
 import (
+	"GoSOLID/gen/dic"
 	"GoSOLID/pkg/domain"
 	"GoSOLID/pkg/services"
 	"GoSOLID/pkg/services/repositories"
 	"github.com/gin-gonic/gin"
+	"github.com/sarulabs/di/v2"
 )
 
 func deleteList() func(c *gin.Context) {
@@ -37,10 +39,9 @@ func updateList() func(c *gin.Context) {
 
 func createList() func(c *gin.Context) {
 	return func(c *gin.Context) {
-		ctn, _ := services.Container.SubContainer()
-		defer ctn.Delete()
-
 		var body domain.List
+
+		ctn, _ := dic.NewContainer(di.Request)
 
 		if err := c.ShouldBindJSON(&body); err != nil {
 			c.JSON(domain.BADREQUEST, gin.H{
@@ -51,14 +52,9 @@ func createList() func(c *gin.Context) {
 
 		var repo repositories.ListRepository
 		if c.Query("draft") == "1" {
-			repo = ctn.Get("json-list-repository").(repositories.ListRepository) // if fail panic
+			repo = ctn.GetJsonListRepository()
 		} else {
-			if err := ctn.Fill("list-repository", &repo); err != nil {
-				c.JSON(domain.BADREQUEST, gin.H{
-					"error": "error on load default list-repository",
-				})
-				return
-			}
+			repo = ctn.GetListRepository()
 		}
 
 		listService := services.NewListService(repo)
