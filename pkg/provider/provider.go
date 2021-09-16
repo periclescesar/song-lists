@@ -1,4 +1,4 @@
-//go:generate go run ../../cmd/providergenerate/gen.go .
+//go:generate go run ../../cmd/providergen/gen.go .
 
 package provider
 
@@ -13,10 +13,11 @@ type Provider struct {
 const JsonListStore = "../data/list.json"
 
 func (p *Provider) Load() error {
-	if err := p.AddDefSlice(ProviderDrivers); err != nil {
+	if err := p.AddDefSlice(DriversDef); err != nil {
 		return err
 	}
-	if err := p.AddDefSlice(ProviderDefRepositories); err != nil {
+
+	if err := p.AddDefSlice(RepositoriesDef); err != nil {
 		return err
 	}
 

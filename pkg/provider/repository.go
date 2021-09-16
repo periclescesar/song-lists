@@ -1,4 +1,4 @@
-//go:generate go run ../../cmd/providergenerate/gen.go .
+//go:generate go run ../../cmd/providergen/gen.go .
 
 package provider
 
@@ -8,7 +8,7 @@ import (
 	"github.com/sarulabs/dingo/v4"
 )
 
-var ProviderDefRepositories = []dingo.Def{
+var RepositoriesDef = []dingo.Def{
 	{
 		Name: "list-repository",
 		Build: func(repo repositories.ListRepository) (repositories.ListRepository, error) {

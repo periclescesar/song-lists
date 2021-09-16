@@ -1,4 +1,4 @@
-//go:generate go run ../../cmd/providergenerate/gen.go .
+//go:generate go run ../../cmd/providergen/gen.go .
 
 package provider
 
@@ -7,7 +7,7 @@ import (
 	"github.com/sarulabs/dingo/v4"
 )
 
-var ProviderDrivers = []dingo.Def{
+var DriversDef = []dingo.Def{
 	{
 		Name: "json-driver",
 		Build: func(filepath string) (*drivers.JsonDriver, error) {
