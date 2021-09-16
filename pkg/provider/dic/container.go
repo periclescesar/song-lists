@@ -8,7 +8,7 @@ import (
 	"github.com/sarulabs/di/v2"
 	"github.com/sarulabs/dingo/v4"
 
-	providerPkg "GoSOLID/pkg/services/provider"
+	providerPkg "GoSOLID/pkg/provider"
 
 	drivers "GoSOLID/pkg/drivers"
 	repositories "GoSOLID/pkg/services/repositories"
@@ -57,7 +57,7 @@ func NewBuilder(scopes ...string) (*builder, error) {
 	}
 	provider := &providerPkg.Provider{}
 	if err := provider.Load(); err != nil {
-		return nil, fmt.Errorf("could not load definitions with the Provider (Provider from GoSOLID/pkg/services/provider): %v", err)
+		return nil, fmt.Errorf("could not load definitions with the Provider (Provider from GoSOLID/pkg/provider): %v", err)
 	}
 	for _, d := range getDiDefs(provider) {
 		if err := b.Add(d); err != nil {

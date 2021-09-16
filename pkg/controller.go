@@ -1,8 +1,8 @@
 package pkg
 
 import (
-	"GoSOLID/gen/dic"
 	"GoSOLID/pkg/domain"
+	"GoSOLID/pkg/provider/dic"
 	"GoSOLID/pkg/services"
 	"GoSOLID/pkg/services/repositories"
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoSOLID/pkg/services/provider"
+	"GoSOLID/pkg/provider"
 	"fmt"
 	"github.com/sarulabs/dingo/v4"
 	"os"
